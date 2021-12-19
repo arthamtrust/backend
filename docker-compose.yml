@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  # Postgres
+  database:
+    image: postgres
+    container_name: artham-db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 5432:5432
+    env_file: .env
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+# Volumes
+volumes:
+  pg-data:
