@@ -14,10 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from apps.posts.views import CharityPostViewSet, EventPostViewSet
 from apps.students.views import StudentViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register(r"students", StudentViewSet, basename="student")
+router.register(r"students", StudentViewSet)
+router.register(r"charities", CharityPostViewSet, basename="charity")
+router.register(r"events", EventPostViewSet, basename="event")
 
 urlpatterns = router.urls
