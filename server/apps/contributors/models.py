@@ -10,10 +10,12 @@ class Contributor(models.Model):
     """
 
     contribution_date = models.DateField(default=date.today)
-    contributor_list = models.TextField()
+    name = models.CharField(max_length=100)
+    email = models.EmailField(null=True)
 
     def __str__(self):
-        return self.contribution_date.strftime("%B, %Y")
+        date = f"{self.contribution_date.month}, {self.contribution_date.year}"
+        return f"{self.name} : {date}"
 
     class Meta:
         ordering = [

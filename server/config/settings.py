@@ -34,6 +34,17 @@ ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS", cast=list)
 
 # Application definition
 
+THIRD_PARTY_PACKAGES = [
+    "rest_framework",
+]
+
+APPS = [
+    "apps.students",
+    "apps.gallery",
+    "apps.posts",
+    "apps.contributors",
+]
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -41,11 +52,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "rest_framework",
-    "apps.students",
-    "apps.gallery",
-    "apps.posts",
-    "apps.contributors",
+    *THIRD_PARTY_PACKAGES,
+    *APPS,
 ]
 
 MIDDLEWARE = [

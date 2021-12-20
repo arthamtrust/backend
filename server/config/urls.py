@@ -1,26 +1,41 @@
-"""config URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-
+from apps.contributors.views import (
+    contributors_by_year,
+    contributors_by_year_and_month,
+    create_contributor,
+)
 from apps.posts.views import CharityPostViewSet, EventPostViewSet
 from apps.students.views import StudentViewSet
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
+from rest_framework.urlpatterns import format_suffix_patterns
 
 router = DefaultRouter()
 router.register(r"students", StudentViewSet)
 router.register(r"charities", CharityPostViewSet, basename="charity")
 router.register(r"events", EventPostViewSet, basename="event")
 
-urlpatterns = router.urls
+
+contributor_paths = format_suffix_patterns(
+    [
+        path(
+            "year/<int:year>/month/<int:month>",
+            contributors_by_year_and_month,
+            name="contributor-year-month-list",
+        ),
+        path(
+            "year/<int:year>/",
+            contributors_by_year,
+            name="contributor-year-list",
+        ),
+        path(
+            "",
+            create_contributor,
+            name="contributor-create",
+        ),
+    ]
+)
+
+urlpatterns = [
+    path("contributors/", include(contributor_paths)),
+    path("", include(router.urls)),
+]
