@@ -15,17 +15,24 @@ router.register(r"charities", CharityPostViewSet, basename="charity")
 router.register(r"events", EventPostViewSet, basename="event")
 
 
-contributor_paths = format_suffix_patterns(
+contributor_urlpatterns = format_suffix_patterns(
     [
         path(
-            "year/<int:year>/month/<int:month>",
-            contributors_by_year_and_month,
-            name="contributor-year-month-list",
-        ),
-        path(
             "year/<int:year>/",
-            contributors_by_year,
-            name="contributor-year-list",
+            include(
+                [
+                    path(
+                        "",
+                        contributors_by_year,
+                        name="contributor-year-list",
+                    ),
+                    path(
+                        "month/<int:month>",
+                        contributors_by_year_and_month,
+                        name="contributor-year-month-list",
+                    ),
+                ]
+            ),
         ),
         path(
             "",
@@ -36,6 +43,6 @@ contributor_paths = format_suffix_patterns(
 )
 
 urlpatterns = [
-    path("contributors/", include(contributor_paths)),
+    path("contributors/", include(contributor_urlpatterns)),
     path("", include(router.urls)),
 ]
