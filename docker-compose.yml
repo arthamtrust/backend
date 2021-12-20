@@ -3,15 +3,23 @@ version: "3.7"
 services:
   # Postgres
   database:
-    image: postgres
+    image: postgres:latest
     container_name: artham-db
     restart: unless-stopped
-    tty: true
     ports:
       - 5432:5432
     env_file: .env
     volumes:
       - pg-data:/var/lib/postgresql/data
+
+  file-server:
+    image: nginx:stable-alpine
+    container_name: artham-file-server
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    volumes:
+      - ./server/assets:/usr/share/nginx/html/assets/:ro
 
 # Volumes
 volumes:
