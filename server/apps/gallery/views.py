@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from .models import Gallery
+from .serializers import GallerySerializer
+
+
+class GalleryViewSet(viewsets.ModelViewSet):
+
+    queryset = Gallery.objects.all()
+    serializer_class = GallerySerializer

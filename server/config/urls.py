@@ -3,6 +3,7 @@ from apps.contributors.views import (
     contributors_by_year_and_month,
     create_contributor,
 )
+from apps.gallery.views import GalleryViewSet
 from apps.posts.views import CharityPostViewSet, EventPostViewSet
 from apps.students.views import StudentViewSet
 from django.urls import include, path
@@ -13,6 +14,7 @@ router = DefaultRouter()
 router.register(r"students", StudentViewSet)
 router.register(r"charities", CharityPostViewSet, basename="charity")
 router.register(r"events", EventPostViewSet, basename="event")
+router.register(r"gallery", GalleryViewSet, basename="gallery")
 
 
 contributor_urlpatterns = format_suffix_patterns(

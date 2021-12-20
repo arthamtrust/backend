@@ -9,7 +9,7 @@ class Gallery(models.Model):
     """
 
     title = models.CharField(max_length=200)
-    thumbnail = models.ImageField()
+    thumbnail = models.CharField(max_length=100)
     url = models.URLField()
 
     def __str__(self):
