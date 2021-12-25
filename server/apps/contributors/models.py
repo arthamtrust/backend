@@ -20,4 +20,5 @@ class Contributor(models.Model):
     class Meta:
         ordering = [
             "-contribution_date",
+            "name",
         ]
